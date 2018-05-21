@@ -1,0 +1,26 @@
+{
+  "name": "redux-list-crud",
+  "version": "0.0.1",
+  "description": "A set of utilities for generating ActionTypes, Reducers, and Actions for a React/Redux application that uses a list CRUD pattern",
+  "main": "index.js",
+  "repository": "https://github.com/HendrikThePendric/redux-list-crud.git",
+  "author": "<hendrikdegraaf@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "tsc",
+    "format": "tsfmt -r",
+    "test": "mocha --reporter spec"
+  },
+  "dependencies": {
+    "lodash": "^4.17.10",
+    "redux": "^4.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "typedoc": "^0.11.1",
+    "typescript": "^2.8.3",
+    "typescript-formatter": "^7.2.0"
+  }
+}
