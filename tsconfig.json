@@ -2,13 +2,21 @@
   "compilerOptions": {
     "target": "ES5",
     "module": "commonjs",
-    "lib": [
-      "es5",
-      "es6",
-      "dom"
-    ],
+    "lib": ["es5", "es6", "dom"],
     "declaration": true,
     "outDir": "./dist",
-    "strict": true
-  }
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "sourceMap": true
+  },
+  "exclude": ["node_modules", "dist"],
+  "compileOnSave": true
 }
