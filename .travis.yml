@@ -1,19 +1,19 @@
 language : node_js
 node_js :
- - stable
+- stable
 env:
   global:
- - CC_TEST_REPORTER_ID=5ff49f0028362d56ba9c3911f43eb42df25e992be8ccf9d2072c44260e3d307e
+  - CC_TEST_REPORTER_ID=5ff49f0028362d56ba9c3911f43eb42df25e992be8ccf9d2072c44260e3d307e
 before_script:
- - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
   > ./cc-test-reporter
- - chmod +x ./cc-test-reporter
- - "./cc-test-reporter before-build"
+- chmod +x ./cc-test-reporter
+- "./cc-test-reporter before-build"
 install:
- - yarn install
+- yarn install
 script:
- - yarn format
- - yarn test
- - yarn build
+- yarn format
+- yarn test
+- yarn build
 after_script:
 - "./cc-test-reporter after-build -d --exit-code $TRAVIS_TEST_RESULT"
