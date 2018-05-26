@@ -14,4 +14,4 @@ TODO:
   * Installation instructions
   * Usage instructions
 * Document code with TypeDoc
-* Publish to NPM (hendrikdegraaf = usename)
+* Publish to NPM
