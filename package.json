@@ -12,8 +12,11 @@
     "build": "tsc",
     "format": "prettier \"lib/{**/*,*}\" --write",
     "test": "jest",
+    "documentation": "typedoc --out ./docs ./lib",
+    "lint": "tslint 'lib/**/*.ts?(x)' --project tsconfig.json",
     "test-watch": "jest --watch --coverage false",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json"
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
+    "precommit": "yarn format && yarn documentation"
   },
   "dependencies": {
     "lodash": "^4.17.10",
@@ -21,10 +24,12 @@
   },
   "devDependencies": {
     "@types/jest": "^22.2.3",
+    "git-pre-commit": "^2.1.4",
     "jest": "^22.4.4",
     "prettier": "^1.12.1",
     "ts-jest": "^22.4.6",
     "tslint": "^5.10.0",
+    "tslint-config-airbnb": "^5.9.2",
     "tslint-config-prettier": "^1.13.0",
     "typedoc": "^0.11.1",
     "typescript": "^2.8.3"
