@@ -5,3 +5,5 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/b63c9853437fb8bf2a7b/maintainability)](https://codeclimate.com/github/HendrikThePendric/redux-list-crud/maintainability)
 
 Don't use this yet. This project only contains a swanky setup but doesn't do anything yet.
+
+API docs will be [here](https://hendrikthependric.github.io/redux-list-crud/)
