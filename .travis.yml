@@ -12,8 +12,8 @@ before_script:
 install:
 - yarn install
 script:
-- yarn format
+- yarn prettier
+- yarn compile
 - yarn test
-- yarn build
 after_script:
 - "./cc-test-reporter after-build -d --exit-code $TRAVIS_TEST_RESULT"
