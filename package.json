@@ -9,6 +9,7 @@
     "license": "MIT",
     "private": false,
     "scripts": {
+        "start": "tsc --watch",
         "compile": "tsc",
         "test": "jest --coverage",
         "prettier": "prettier \"{src,__tests__,__mocks__,__fixtures__}/{**/*,*}\" \"__tests__/{**/*,*}\" --write",
