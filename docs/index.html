@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ts-jest-sample</title>
+	<title>redux-list-crud</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">ts-jest-sample</a>
+					<a href="index.html" class="title">redux-list-crud</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -56,7 +56,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> ts-jest-sample</h1>
+			<h1> redux-list-crud</h1>
 		</div>
 	</div>
 </header>
@@ -64,287 +64,13 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="sample-project-using-ts-jest">Sample Project using ts-jest</h1>
-				<p>The goal in this project is to create a TypeScript project that can do all of the following:</p>
-				<ul>
-					<li>Compile code as an es5 library that can be published as a Node module with typings.</li>
-					<li>Using <code>jest</code> and <code>ts-jest</code> for testing</li>
-					<li>Provides proper stack traces for failed tests</li>
-					<li>Provide accurate code coverage metrics</li>
-					<li>Can be debugged using the Node debugger with proper source maps</li>
-				</ul>
-				<h2 id="basic-setup">Basic Setup</h2>
-				<h3 id="module-and-dependencies">Module and Dependencies</h3>
-				<p>I start by initialing this as an <code>npm</code> project.</p>
-				<pre><code class="lang-sh">$ yarn init .
-</code></pre>
-				<p>Then, I install <code>typescript</code>, <code>jest</code>, <code>ts-jest</code> and <code>@types/jest</code> as dependencies:</p>
-				<pre><code class="lang-sh">$ yarn add -D typescript jest ts-jest @types/jest
-</code></pre>
-				<p>At the time of this writing, that means <a href="mailto:`typescript@2.7.1">`typescript@2.7.1</a><code>,</code><a href="mailto:jest@22.1.4">jest@22.1.4</a><code>and</code><a href="mailto:ts-jest@22.0.2">ts-jest@22.0.2</a>`.</p>
-				<h3 id="typescript">TypeScript</h3>
-				<p>Next, we initialize this as a TypeScript project using:</p>
-				<pre><code class="lang-sh">$ npx tsc --init .
-</code></pre>
-				<p>I want my TypeScript generated code to be stored in <code>./lib</code> and I want declarations generated.
-				So, I configure <code>outDir</code> in <code>tsconfig.json</code> to be <code>./lib</code>.</p>
-				<h3 id="files">Files</h3>
-				<p>My <code>.gitignore</code> is then configured to be:</p>
-				<pre><code class="lang-sh">/node_modules
-/lib
-</code></pre>
-				<p>...while my <code>.npmignore</code> is just:</p>
-				<pre><code class="lang-sh">/node_modules
-</code></pre>
-				<p>For the same reason, I remove the default value for <code>files</code> in <code>tsconfig.json</code> and replace it with:</p>
-				<pre><code class="lang-json">    &quot;exclude&quot;: [&quot;node_modules&quot;, &quot;lib&quot;]
-</code></pre>
-				<h3 id="source">Source</h3>
-				<p>To start, I create a <code>src/index.ts</code> that contains a simple function:</p>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sampleFunction</span>(<span class="hljs-params">x: <span class="hljs-built_in">string</span></span>): <span class="hljs-title">string</span> </span>{
-    <span class="hljs-keyword">return</span> x + x;
-}
-</code></pre>
-				<p>I also add a simple <code>jest</code> test. I prefer to keep my tests in a completely separate
-					location, so I&#39;ll put all my tests in <code>__tests__</code>. So I create the following test case
-				in <code>__tests__/base.spec.ts</code>:</p>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { sampleFunction } <span class="hljs-keyword">from</span> <span class="hljs-string">"../src"</span>;
-
-describe(<span class="hljs-string">"This is a simple test"</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
-    test(<span class="hljs-string">"Check the sampleFunction function"</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
-        expect(sampleFunction(<span class="hljs-string">"hello"</span>)).toEqual(<span class="hljs-string">"hellohello"</span>);
-    });
-});
-</code></pre>
-				<h3 id="configurating-jest">Configurating Jest</h3>
-				<p>At this point, I&#39;d like to run that test. But first I need to create a <code>jest.config.js</code>
-					file for all my <code>jest</code> settings. This has to take into account the fact that I&#39;m using
-					<code>ts-jest</code> and the fact that my tests are stored in <code>__tests__</code>. So the resulting file
-				looks like this:</p>
-				<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = {
-    <span class="hljs-attr">transform</span>: {
-        <span class="hljs-string">"^.+\\.tsx?$"</span>: <span class="hljs-string">"ts-jest"</span>,
-    },
-    <span class="hljs-attr">testRegex</span>: <span class="hljs-string">"(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$"</span>,
-    <span class="hljs-attr">moduleFileExtensions</span>: [<span class="hljs-string">"ts"</span>, <span class="hljs-string">"tsx"</span>, <span class="hljs-string">"js"</span>, <span class="hljs-string">"jsx"</span>, <span class="hljs-string">"json"</span>, <span class="hljs-string">"node"</span>],
-};
-</code></pre>
-				<h3 id="scripts">Scripts</h3>
-				<p>I then add the following scripts to <code>package.json</code>:</p>
-				<pre><code class="lang-json">  &quot;scripts&quot;: {
-    &quot;compile&quot;: &quot;tsc&quot;,
-    &quot;test&quot;: &quot;jest&quot;
-  }
-</code></pre>
-				<p>At this point, if I run <code>yarn test</code>, I get exactly what I was hoping for:</p>
-				<pre><code> PASS  __tests__/base.spec.ts
-  This is a<span class="hljs-built_in"> simple </span>test
-    ✓ Check the sampleFunction function (3ms)
-
-Test Suites: 1 passed, 1 total
-Tests:       1 passed, 1 total
-</code></pre><h2 id="code-coverage">Code Coverage</h2>
-				<h3 id="configuration">Configuration</h3>
-				<p>To enable code coverage, I update my <code>jest.config.js</code> file to:</p>
-				<pre><code class="lang-js"><span class="hljs-built_in">module</span>.exports = {
-    <span class="hljs-attr">transform</span>: {
-        <span class="hljs-string">"^.+\\.tsx?$"</span>: <span class="hljs-string">"ts-jest"</span>,
-    },
-    <span class="hljs-attr">testRegex</span>: <span class="hljs-string">"(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$"</span>,
-    <span class="hljs-attr">moduleFileExtensions</span>: [<span class="hljs-string">"ts"</span>, <span class="hljs-string">"tsx"</span>, <span class="hljs-string">"js"</span>, <span class="hljs-string">"jsx"</span>, <span class="hljs-string">"json"</span>, <span class="hljs-string">"node"</span>],
-    <span class="hljs-attr">collectCoverage</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-attr">mapCoverage</span>: <span class="hljs-literal">true</span>,
-};
-</code></pre>
-				<p>I&#39;ll also want to update my <code>.gitignore</code> and <code>.npmignore</code> files to avoid version
-				controlling or publishing the <code>coverage</code> directory generated by <code>jest</code>.</p>
-				<h3 id="code-organization">Code Organization</h3>
-				<p>At this point, I&#39;m going to start introducing sub-modules in my project. So I&#39;ll add a
-					<code>src/core</code> and a <code>src/utils</code> module just so make things sligtly more realistic. Then I&#39;ll
-				export the contents of both of these so that <code>src/index.ts</code> looks like this:</p>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">"./core"</span>;
-<span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">"./utils"</span>;
-</code></pre>
-				<p>These then import specific files containing various types and functions. Initially, I&#39;ll
-					create a very simple set of types for representing extremely simple expressions with only
-					literals and the binary operations <code>+</code>, <code>-</code>, <code>*</code> and <code>/</code>. Then I can write a few tests
-				like these:</p>
-				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { evaluate, Expression } <span class="hljs-keyword">from</span> <span class="hljs-string">"../src"</span>;
-
-describe(<span class="hljs-string">"Simple expression tests"</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
-    test(<span class="hljs-string">"Check literal value"</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
-        expect(evaluate({ <span class="hljs-keyword">type</span>: <span class="hljs-string">"literal"</span>, value: <span class="hljs-number">5</span> })).toBeCloseTo(<span class="hljs-number">5</span>);
-    });
-    test(<span class="hljs-string">"Check addition"</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
-        <span class="hljs-keyword">let</span> expr: Expression = {
-            <span class="hljs-keyword">type</span>: <span class="hljs-string">"binary"</span>,
-            operator: <span class="hljs-string">"+"</span>,
-            left: {
-                <span class="hljs-keyword">type</span>: <span class="hljs-string">"literal"</span>,
-                value: <span class="hljs-number">5</span>,
-            },
-            right: {
-                <span class="hljs-keyword">type</span>: <span class="hljs-string">"literal"</span>,
-                value: <span class="hljs-number">10</span>,
-            },
-        };
-        expect(evaluate(expr)).toBeCloseTo(<span class="hljs-number">15</span>);
-    });
-});
-</code></pre>
-				<p>So far so good. But note that if I actually run these tests, I get these results:</p>
-				<pre><code> PASS  __tests__/base.spec.ts
-  Simple expression tests
-    ✓ Check literal value (4ms)
-    ✓ Check addition
-
-Test Suites: 1 passed, 1 total
-Tests:       2 passed, 2 total
-Snapshots:   0 total
-Time:        2.048s
-Ran all test suites.
----------------|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------------</span>|
-File           |<span class="hljs-string">  % Stmts </span>|<span class="hljs-string"> % Branch </span>|<span class="hljs-string">  % Funcs </span>|<span class="hljs-string">  % Lines </span>|<span class="hljs-string">Uncovered Lines </span>|
----------------|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------------</span>|
-All files      |<span class="hljs-string">    66.67 </span>|<span class="hljs-string">     37.5 </span>|<span class="hljs-string">       50 </span>|<span class="hljs-string">    66.67 </span>|<span class="hljs-string">                </span>|
- src           |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
-  index.ts     |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
- src/core      |<span class="hljs-string">    61.54 </span>|<span class="hljs-string">     37.5 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">    61.54 </span>|<span class="hljs-string">                </span>|
-  functions.ts |<span class="hljs-string">    54.55 </span>|<span class="hljs-string">     37.5 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">    54.55 </span>|<span class="hljs-string"> 14,16,18,20,25 </span>|
-  index.ts     |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
- src/utils     |<span class="hljs-string">    66.67 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">        0 </span>|<span class="hljs-string">    66.67 </span>|<span class="hljs-string">                </span>|
-  checks.ts    |<span class="hljs-string">       50 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">        0 </span>|<span class="hljs-string">       50 </span>|<span class="hljs-string">              2 </span>|
-  index.ts     |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
----------------|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------------</span>|
-</code></pre><p>Note the lack of code coverage. Adding a few more test cases along with some
-					<code>/* istanbul ignore ... */</code> comments to let <code>istanbul</code> know what it can safely
-				ignore, we get to:</p>
-				<pre><code> PASS  __tests__/base.spec.ts
-  Simple expression tests
-    ✓ Check literal value (3ms)
-    ✓ Check addition
-    ✓ Check subtraction
-    ✓ Check multiplication (1ms)
-    ✓ Check division
-
-Test Suites: 1 passed, 1 total
-Tests:       5 passed, 5 total
-Snapshots:   0 total
-Time:        1.353s
-Ran all test suites.
----------------|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------------</span>|
-File           |<span class="hljs-string">  % Stmts </span>|<span class="hljs-string"> % Branch </span>|<span class="hljs-string">  % Funcs </span>|<span class="hljs-string">  % Lines </span>|<span class="hljs-string">Uncovered Lines </span>|
----------------|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------------</span>|
-All files      |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
- src           |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
-  index.ts     |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
- src/core      |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
-  functions.ts |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
-  index.ts     |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
- src/utils     |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
-  checks.ts    |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
-  index.ts     |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
----------------|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------------</span>|
-</code></pre><p>Now, if we change a test to make it fail, we get something like this:</p>
-				<pre><code>● Simple expression tests › Check division
-
-    expect(received).toBeCloseTo(expected, precision)
-
-    Expected value to be close to (with 2-digit precision):
-      1
-    Received:
-      2
-
-      19 |<span class="hljs-string">     test("Check division", () =&gt; {
-      20 </span>|<span class="hljs-string">         let expr = bin("/", 10, 5);
-    &gt; 21 </span>|<span class="hljs-string">         expect(evaluate(expr)).toBeCloseTo(1);
-      22 </span>|<span class="hljs-string">     });
-      23 </span>|<span class="hljs-string"> });
-      24 </span>|
-
-      at Object.<span class="hljs-variable">&lt;anonymous&gt;</span> (__tests__/base.spec.ts:21:32)
-
-Test Suites: 1 failed, 1 total
-Tests:       1 failed, 4 passed, 5 total
-Snapshots:   0 total
-Time:        1.535s
-Ran all test suites.
----------------|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------------</span>|
-File           |<span class="hljs-string">  % Stmts </span>|<span class="hljs-string"> % Branch </span>|<span class="hljs-string">  % Funcs </span>|<span class="hljs-string">  % Lines </span>|<span class="hljs-string">Uncovered Lines </span>|
----------------|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------------</span>|
-All files      |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
- src           |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
-  index.ts     |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
- src/core      |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
-  functions.ts |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
-  index.ts     |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
- src/utils     |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
-  checks.ts    |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
-  index.ts     |<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">      100 </span>|<span class="hljs-string">                </span>|
----------------|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------</span>|<span class="hljs-string">----------------</span>|
-</code></pre><p>Note that the stack track is correct. It points to the problem <strong>in the TypeScript
-				code</strong>.</p>
-				<h2 id="compilation">Compilation</h2>
-				<p>Recall that we added a <code>compile</code> script to our <code>package.json</code>. We can compile the
-					code with <code>yarn compile</code>. Doing so, we see that the <code>lib</code> directory is populated
-				with two subdirectories, <code>src</code> and <code>__tests__</code>.</p>
-				<p>However, if we look in those directories, we will find that they only include
-					the generated Javascript code. They do not include type definitions. In order
-					to generate type definitions (<code>.d.ts</code> files) so that other TypeScript users can
-					benefit from all the type information we&#39;ve added to our code, we have to set
-				the <code>declaration</code> field in our <code>tsconfig.json</code> file to be <code>true</code>.</p>
-				<p>Also note that in order for others to use this package as an NPM module, you need
-					to set the <code>main</code> field in <code>package.json</code> to <code>lib/src/index.js</code>. Furthermore, in
-					order for others to be able to access the types in this module, we also need to
-				set the <code>typings</code> field in <code>package.json</code> to <code>lib/src/index.d.ts</code>. In other words,</p>
-				<pre><code class="lang-json">    &quot;main&quot;: &quot;lib/src/index.js&quot;,
-    &quot;typings&quot;: &quot;lib/src/index.d.ts&quot;,
-</code></pre>
-				<p>If properly configured, we can then launch a <code>node</code> session and import our new package:</p>
-				<pre><code class="lang-sh">$ node
-&gt; var me = require(<span class="hljs-string">"."</span>)
-undefined
-&gt; me
-{ evaluate: [Function: evaluate],
-  assertNever: [Function: assertNever] }
-&gt;
-</code></pre>
-				<p>Now be sure to update your <code>jest.config.js</code> to include the following setting or <code>jest</code>
-				will start matching the code in the <code>lib/__tests__</code> directory:</p>
-				<pre><code class="lang-json">    testPathIgnorePatterns: [&quot;/lib/&quot;, &quot;/node_modules/&quot;],
-</code></pre>
-				<h2 id="debugging">Debugging</h2>
-				<p>Finally, we come to debugging. I&#39;m using Visual Studio Code, so I&#39;ll demonstrate how to
-					get debugging working there. Some of this information may very well translate to other
-				IDEs.</p>
-				<p>In VSCode, we can go to the debugging sidebar. Initially, next to the &quot;play&quot; button
-					will be the words &quot;No Configuration&quot;. Clicking on that brings up a pull-down menu
-				with an option &quot;Add Confiuration...&quot;.</p>
-				<p>As much as I love TypeScript, debugging is really its Achilles Heel. It isn&#39;t that you
-					cannot debug, it is that it is just difficult to get working. If you select &quot;Add Configuration...&quot; and then &quot;Node.js&quot;, you&#39;ll see several preconfigurations including
-					one for <code>mocha</code>. But there isn&#39;t one for <code>jest</code>. So you&#39;ll have to create your
-					own <code>.vscode/launch.json</code> file. Fortunately, the <code>jest</code> page suggestions you create
-				a <code>.vscode/launch.json</code> file that looks like this:</p>
-				<pre><code class="lang-json">{
-    <span class="hljs-attr">"version"</span>: <span class="hljs-string">"0.2.0"</span>,
-    <span class="hljs-attr">"configurations"</span>: [
-        {
-            <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Debug Jest Tests"</span>,
-            <span class="hljs-attr">"type"</span>: <span class="hljs-string">"node"</span>,
-            <span class="hljs-attr">"request"</span>: <span class="hljs-string">"launch"</span>,
-            <span class="hljs-attr">"runtimeArgs"</span>: [<span class="hljs-string">"--inspect-brk"</span>, <span class="hljs-string">"${workspaceRoot}/node_modules/.bin/jest"</span>, <span class="hljs-string">"--runInBand"</span>],
-            <span class="hljs-attr">"console"</span>: <span class="hljs-string">"integratedTerminal"</span>,
-            <span class="hljs-attr">"internalConsoleOptions"</span>: <span class="hljs-string">"neverOpen"</span>
-        }
-    ]
-}
-</code></pre>
-				<p>I was pleasantly surprised to find that I could not only run my tests and get code coverage
-					as usual, but also set breakpoints in both the tests (<em>i.e.,</em> in <code>__tests__/base.spec.ts</code>)
-				as well as in the code (<em>e.g.,</em> <code>src/core/functions.ts</code>) and the debugger will find them.</p>
-				<p>Note that I tested all this on Node 8.x. I&#39;ve seen issues with debugging using Node 6.x so
-					if you are having trouble there, you might consider upgrading (or let, if you manage to fix
-				it, submit a PR for this README explaining the fix).</p>
+				<h1 id="redux-list-crud">Redux List CRUD</h1>
+				<p><a href="https://travis-ci.org/HendrikThePendric/redux-list-crud"><img src="https://travis-ci.org/HendrikThePendric/redux-list-crud.svg?branch=master" alt="Build Status"></a>
+					<a href="https://codeclimate.com/github/HendrikThePendric/redux-list-crud/test_coverage"><img src="https://api.codeclimate.com/v1/badges/b63c9853437fb8bf2a7b/test_coverage" alt="Test Coverage"></a>
+					<a href="https://codeclimate.com/github/HendrikThePendric/redux-list-crud/maintainability"><img src="https://api.codeclimate.com/v1/badges/b63c9853437fb8bf2a7b/maintainability" alt="Maintainability"></a>
+				<img src="https://img.shields.io/npm/v/npm.svg" alt="npm"></p>
+				<p>Don&#39;t use this yet. This project only contains a swanky setup but doesn&#39;t do anything yet.</p>
+				<p>API docs will be <a href="https://hendrikthependric.github.io/redux-list-crud/">here</a></p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -354,22 +80,7 @@ undefined
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_core_functions_.html">"core/functions"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_core_index_.html">"core/index"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_core_types_.html">"core/types"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
 						<a href="modules/_index_.html">"index"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_utils_checks_.html">"utils/checks"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_utils_index_.html">"utils/index"</a>
 					</li>
 				</ul>
 			</nav>
