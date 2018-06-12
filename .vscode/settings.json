@@ -1,7 +1,7 @@
 {
     "eslint.enable": true,
     "files.exclude": {
-        "node_modules": true,
+        "node_modules": false,
         ".npm-offline-cache": true
     },
     "editor.formatOnSave": true,
