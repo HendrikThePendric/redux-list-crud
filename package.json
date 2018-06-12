@@ -15,7 +15,7 @@
         "prettier": "prettier \"{src,__tests__,__mocks__,__fixtures__}/{**/*,*}\" \"__tests__/{**/*,*}\" --write",
         "lint": "tslint '{src,__tests__,__mocks__,__fixtures__}/**/*.ts?(x)' --project tsconfig.json",
         "docs": "typedoc --out ./docs ./src",
-        "precommit": "yarn prettier && yarn docs"
+        "precommit": "yarn test"
     },
     "devDependencies": {
         "@types/jest": "^22.1.1",
