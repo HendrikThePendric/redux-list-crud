@@ -1,19 +1,44 @@
 language : node_js
+
 node_js :
 - stable
+
 env:
   global:
   - CC_TEST_REPORTER_ID=5ff49f0028362d56ba9c3911f43eb42df25e992be8ccf9d2072c44260e3d307e
+
+install:
+- yarn install
+
 before_script:
+- yarn prettier
+- yarn compile
 - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
   > ./cc-test-reporter
 - chmod +x ./cc-test-reporter
 - "./cc-test-reporter before-build"
-install:
-- yarn install
+
 script:
-- yarn format
 - yarn test
-- yarn build
+
+after_success:
+  - yarn docs
+  - npm pack
+
 after_script:
 - "./cc-test-reporter after-build -d --exit-code $TRAVIS_TEST_RESULT"
+
+deploy:
+  - provider: pages
+    skip_cleanup: true
+    local_dir: docs/
+    github_token: $GITHUB_TOKEN
+    on:
+      tags: true
+  - provider: releases
+    api_key: $GITHUB_TOKEN
+    file_glob: true
+    file: "redux-list-crud-*.tgz"
+    skip_cleanup: true
+    on:
+      tags: true

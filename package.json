@@ -1,37 +1,37 @@
 {
-  "name": "redux-list-crud",
-  "version": "0.0.2",
-  "description": "A set of utilities for generating ActionTypes, Reducers, and Actions for a React/Redux application that uses a list CRUD pattern",
-  "main": "index.js",
-  "repository": "https://github.com/HendrikThePendric/redux-list-crud.git",
-  "author": "<hendrikdegraaf@gmail.com>",
-  "license": "MIT",
-  "private": false,
-  "scripts": {
-    "build": "tsc",
-    "format": "prettier \"lib/{**/*,*}\" --write",
-    "test": "jest",
-    "documentation": "typedoc --out ./docs ./lib",
-    "lint": "tslint 'lib/**/*.ts?(x)' --project tsconfig.json",
-    "test-watch": "jest --watch --coverage false",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "precommit": "yarn format && yarn documentation"
-  },
-  "dependencies": {
-    "lodash": "^4.17.10",
-    "redux": "^4.0.0"
-  },
-  "devDependencies": {
-    "@types/jest": "^22.2.3",
-    "git-pre-commit": "^2.1.4",
-    "jest": "^22.4.4",
-    "prettier": "^1.12.1",
-    "ts-jest": "^22.4.6",
-    "tslint": "^5.10.0",
-    "tslint-config-airbnb": "^5.9.2",
-    "tslint-config-prettier": "^1.13.0",
-    "typedoc": "^0.11.1",
-    "typedoc-plugin-nojekyll": "^1.0.1",
-    "typescript": "^2.8.3"
-  }
+    "name": "redux-list-crud",
+    "version": "0.0.1",
+    "description": "A set of utilities for generating ActionTypes, Reducers, and Actions for a React/Redux application that uses a list CRUD pattern",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
+    "repository": "https://github.com/HendrikThePendric/redux-list-crud.git",
+    "author": "<hendrikdegraaf@gmail.com>",
+    "license": "MIT",
+    "private": false,
+    "scripts": {
+        "start": "tsc --watch",
+        "compile": "tsc",
+        "test": "jest --coverage",
+        "prettier": "prettier \"{src,__tests__,__mocks__,__fixtures__}/{**/*,*}\" \"__tests__/{**/*,*}\" --write",
+        "lint": "tslint '{src,__tests__,__mocks__,__fixtures__}/**/*.ts?(x)' --project tsconfig.json",
+        "docs": "typedoc --out ./docs ./src",
+        "precommit": "yarn test"
+    },
+    "devDependencies": {
+        "@types/jest": "^22.1.1",
+        "git-pre-commit": "^2.1.4",
+        "jest": "^22.1.4",
+        "prettier": "^1.13.5",
+        "ts-jest": "^22.0.2",
+        "tslint": "^5.10.0",
+        "tslint-config-airbnb": "^5.9.2",
+        "tslint-config-prettier": "^1.13.0",
+        "typedoc": "^0.11.1",
+        "typedoc-plugin-nojekyll": "^1.0.1",
+        "typescript": "^2.7.1"
+    },
+    "dependencies": {
+        "lodash": "^4.17.10",
+        "redux": "^4.0.0"
+    }
 }
