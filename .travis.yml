@@ -23,7 +23,7 @@ script:
 
 after_success:
   - yarn docs
-  - npm pack
+  # - npm pack
 
 after_script:
 - "./cc-test-reporter after-build -d --exit-code $TRAVIS_TEST_RESULT"
