@@ -31,15 +31,17 @@ after_script:
 deploy:
   - provider: pages
     skip_cleanup: true
+    keep-history: true
     local_dir: docs/
+    target_branch: "docs"
     github_token: $GITHUB_TOKEN
     on:
       tags: true
   - provider: releases
     api_key: $GITHUB_TOKEN
-    target_branch: "docs"
     file_glob: true
     file: "redux-list-crud-*.tgz"
     skip_cleanup: true
+    keep-history: true
     on:
       tags: true
