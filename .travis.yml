@@ -37,11 +37,11 @@ deploy:
     github_token: $GITHUB_TOKEN
     on:
       tags: true
-  - provider: releases
-    api_key: $GITHUB_TOKEN
-    file_glob: true
-    file: "redux-list-crud-*.tgz"
-    skip_cleanup: true
-    keep_history: true
-    on:
-      tags: true
+  # - provider: releases
+  #   api_key: $GITHUB_TOKEN
+  #   file_glob: true
+  #   file: "redux-list-crud-*.tgz"
+  #   skip_cleanup: true
+  #   keep_history: true
+  #   on:
+  #     tags: true
