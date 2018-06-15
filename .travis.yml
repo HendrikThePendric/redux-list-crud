@@ -1,15 +1,11 @@
-language : node_js
-
-node_js :
+language: node_js
+node_js:
 - stable
-
 env:
   global:
   - CC_TEST_REPORTER_ID=5ff49f0028362d56ba9c3911f43eb42df25e992be8ccf9d2072c44260e3d307e
-
 install:
 - yarn install
-
 before_script:
 - yarn prettier
 - yarn compile
@@ -17,31 +13,16 @@ before_script:
   > ./cc-test-reporter
 - chmod +x ./cc-test-reporter
 - "./cc-test-reporter before-build"
-
 script:
 - yarn test
-
 after_success:
-  - yarn docs
-  # - npm pack
-
+- yarn docs
 after_script:
 - "./cc-test-reporter after-build -d --exit-code $TRAVIS_TEST_RESULT"
-
 deploy:
-  - provider: pages
-    skip_cleanup: true
-    keep_history: true
-    local_dir: docs/
-    target_branch: "master"
-    github_token: $GITHUB_TOKEN
-    on:
-      tags: true
-  # - provider: releases
-  #   api_key: $GITHUB_TOKEN
-  #   file_glob: true
-  #   file: "redux-list-crud-*.tgz"
-  #   skip_cleanup: true
-  #   keep_history: true
-  #   on:
-  #     tags: true
+  provider: releases
+  api_key:
+    secure: NqQ4nCBF1xgbK4L3KSfPSRTPz1AXqhLW+90GUqDI729uG1rOQcgM7/AHMAovP9OeNK4vGgEN9LP2UK7Z3pgVT1wX4hQhBTnE5i2MliGCRCs09g3lS1DSeNhSZ2N4YzJoRtA5Ze7T7Gd+9P4x2muiSi/yRS44wfC/f6FHJve8qARohMGcxUZwRKQgLBCubWKGJ1m2T1pP9MDNaUPJtAw2s6jgQ7kLPRhupHbwNXI0coN6e74OPuFpwFZBEcREIiEyTQ6dQxy0A59uaQgc8M1SZGxDFWOnGdNMgtsZqFP7FH21L2ukvTXww8IvJkSayvm44ZWZkt16Fy320dxxutj6z8sMXG6/GfF4fzOrakr2oS8zUZZQ7jl385ubXRtkON9Jr7XWXxWiPgnLMNkaVGYNchOcVx1n01BHZDfKMCXATeHik1VRGhT4Abfm58XdQ1iOW5myXxdycINQTlYkV/d2FIU0tJZfDStt0g6Pa5y9r+i3Qxk9BiH2l8TbNcTv0eWeOi2rdseQjiUOTt5+nTKv92REAx7Gm1TeVBEtevaN0a6MPrd1KDeWxHZ7IbKJW0HwXuP0gl5LMTZFCMPxl8XKVKB2vT1JNgjPS7XpLeoYEnAiC9oxfuHD42SvGHovT9mrRfkRRK6jKWsT7bhsrSvnGNjsdhGHwx1m8MXm4V957mE=
+  file: redux-list-crud-*.tgz
+  on:
+    repo: HendrikThePendric/redux-list-crud
