@@ -1,6 +1,6 @@
 {
     "name": "redux-list-crud",
-    "version": "0.0.12",
+    "version": "0.0.13",
     "description": "A set of utilities for generating ActionTypes, Reducers, and Actions for a React/Redux application that uses a list CRUD pattern",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
