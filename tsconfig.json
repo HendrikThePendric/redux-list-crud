@@ -18,5 +18,10 @@
         "watch": false
     },
     "include": ["src"],
+    "exclude": [
+        "*.spec.ts",
+        "__fixtures__",
+        "__mocks__"
+    ],
     "compileOnSave": true
 }
